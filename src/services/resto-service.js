@@ -1,9 +1,19 @@
 export default class RestoService {
-    async getMenuItems(url) {
-        let res = await fetch(url);
+    
+    _apiBase = 'http://localhost:3000';
+    
+    async getResource(url) {
+        
+        const res = await fetch(`${this._apiBase}${url}`);
+
         if(!res.ok) {
             throw new Error(`Could not fetch ${url}, status: ${res.status}`);
         }
+
         return await res.json();
+    }
+
+    async getMenuItems(url) {
+        return await this.getResource(`/menu/`);
     }
 }
