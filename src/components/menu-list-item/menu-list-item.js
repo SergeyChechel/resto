@@ -2,7 +2,8 @@ import React from 'react';
 import './menu-list-item.scss';
 
 
-const MenuListItem = ({menuItem}) => {
+const MenuListItem = ({menuItem, onAddToCard}) => {
+
     const {title, price, url, category} = menuItem;
     
     return (
@@ -11,7 +12,7 @@ const MenuListItem = ({menuItem}) => {
             <img className="menu__img" src={url} alt={title}></img>
             <div className="menu__category">Category: <span>{category}</span></div>
             <div className="menu__price">Price: <span>{price}$</span></div>
-            <button className="menu__btn">Add to cart</button>
+            <button onClick={() => onAddToCard()} className="menu__btn">Add to cart</button>
         </li>
     )
 }
