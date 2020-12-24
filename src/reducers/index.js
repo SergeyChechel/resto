@@ -22,20 +22,41 @@ const reducer = (state = initialState, action) => {
         case 'ITEM_ADD_TO_CART':
             const id = action.payload;
             const item = state.menu.find(item => item.id === id);
-            const newItem = {
-                title: item.title,
-                price: item.price,
-                url: item.url,
-                id: item.id
-            };
+            const itemInCart = state.items.find(item => item.id === id);
+            const itemInCartIndex = state.items.findIndex(item => item.id === id);
+            let obj;
+            if (itemInCart) {
+                itemInCart.quantity = itemInCart.quantity + 1;
+                obj = {
+                    ...state,
+                    items: [
+                        ...state.items.slice(0, itemInCartIndex),
+                        itemInCart,
+                        ...state.items.slice(itemInCartIndex + 1)
+                    ]
+                };
+            } else {
+                const newItem = {
+                    title: item.title,
+                    price: item.price,
+                    url: item.url,
+                    id: item.id,
+                    quantity: 1
+                };
 
-            return {
-                ...state,
-                items: [
-                    ...state.items,
-                    newItem
-                ]
-            };
+                obj = {
+                    ...state,
+                    items: [
+                        ...state.items,
+                        newItem
+                    ]
+                };
+            } 
+            
+            return obj;
+
+            
+
         case 'ITEM_REMOVE_FROM_CART':
             const index = action.payload;
             const itemIndex = state.items.findIndex(item => item.id === index);

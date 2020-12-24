@@ -21,8 +21,6 @@ class MenuList extends Component {
     render() {
         const {menuItems, loading, addedToCart} = this.props;
 
-
-
         if (loading) {
             return <Spinner/>
         }
